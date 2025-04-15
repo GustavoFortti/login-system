@@ -1,24 +1,17 @@
-const express = require("express");
-const cors = require("cors");
-require("dotenv").config({ path: ".env-dev" });
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
 
-const { AppDataSource } = require("./config/data-source");
-const routes = require("./routes");
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
+);
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-AppDataSource.initialize()
-  .then(() => {
-    console.log("📦 Database connected");
-    app.use("/api", routes);
-
-    const PORT = process.env.PORT || 3001;
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error("❌ Failed to connect to the database", err);
-  });
+reportWebVitals();
