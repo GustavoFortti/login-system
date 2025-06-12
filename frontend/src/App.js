@@ -10,12 +10,13 @@ import {
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 
-import Login from "./pages/login/Login";
-import Register from "./pages/login/Register";
-import ForgotPassword from "./pages/login/ForgotPassword";
-import ResetPassword from "./pages/login/ResetPassword";
-import Dashboard from "./pages/Dashboard";
-import VerifyEmail from "./pages/login/VerifyEmail";
+import Login from "./pages/public/Login";
+import Register from "./pages/public/Register";
+import ForgotPassword from "./pages/public/ForgotPassword";
+import ResetPassword from "./pages/public/ResetPassword";
+import Home from "./pages/private/Home";
+import VerifyEmail from "./pages/public/VerifyEmail";
+import Account from "./pages/private/Account";
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem("accessToken");
@@ -70,27 +71,24 @@ function App() {
       <Container maxWidth="sm" sx={{ mt: 4 }}>
         {/* Botão de alternância no topo */}
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <IconButton onClick={() => setMode(mode === "light" ? "dark" : "light")} color="inherit">
+          <IconButton
+            onClick={() => setMode(mode === "light" ? "dark" : "light")}
+            color="inherit"
+          >
             {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
         </div>
 
         <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
 
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path="/account" element={<PrivateRoute><Account /></PrivateRoute>} />
           <Route path="*" element={<h2>Página não encontrada</h2>} />
         </Routes>
       </Container>

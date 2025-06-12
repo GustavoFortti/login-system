@@ -7,7 +7,7 @@ const apiClient = axios.create({
   baseURL: API_URL,
 });
 
-// Interceptor para adicionar token nas requisições
+// Interceptor para adicionar access token nas requisições
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken");
@@ -19,18 +19,17 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Interceptor para renovar token automaticamente
+// Interceptor para renovar token automaticamente ao receber "TokenExpiredError"
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Evita loop infinito
-    if (
-      error.response?.status === 403 &&
-      !originalRequest._retry &&
-      error.response?.data?.message?.includes("expired")
-    ) {
+    const isTokenExpired =
+      error.response?.status === 401 &&
+      error.response?.data?.message === "TokenExpiredError";
+
+    if (isTokenExpired && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
@@ -42,8 +41,9 @@ apiClient.interceptors.response.use(
 
         // Atualiza o token na requisição original
         originalRequest.headers["Authorization"] = `Bearer ${data.accessToken}`;
-        return apiClient(originalRequest);
+        return apiClient(originalRequest); // Reenvia a requisição original
       } catch (err) {
+        // Se falhar a renovação, limpa tudo e redireciona para login
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         window.location.href = "/login";
