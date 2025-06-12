@@ -1,28 +1,28 @@
 
-# 🔐 Sistema de Autenticação Completo
+# 🔐 Complete Authentication System
 
-Este é um sistema completo de autenticação e gerenciamento de usuários, utilizando as tecnologias **React**, **Node.js**, **MySQL**, e **Redis**, com suporte a:
+This is a full authentication and user management system using **React**, **Node.js**, **MySQL**, and **Redis**, with support for:
 
-- Login com e-mail/senha
-- Login com Google
-- Verificação de e-mail
-- Recuperação e redefinição de senha
-- Refresh de token
+- Email/password login
+- Google login
+- Email verification
+- Password recovery and reset
+- Token refresh
 
 ---
 
-## 📂 Tecnologias Utilizadas
+## 📂 Technologies Used
 
 - **Front-end:** React
 - **Back-end:** Node.js (Express)
-- **Banco de Dados:** MySQL
+- **Database:** MySQL
 - **Cache / Token store:** Redis
-- **Autenticação:** JWT (com Refresh Token)
+- **Authentication:** JWT (with Refresh Token)
 - **OAuth:** Google Login
 
 ---
 
-## 📁 Estrutura de Diretórios
+## 📁 Directory Structure
 
 ### Front-End
 
@@ -45,85 +45,85 @@ Este é um sistema completo de autenticação e gerenciamento de usuários, util
 
 ---
 
-## 🔗 Endpoints da API
+## 🔗 API Endpoints
 
-### 🔑 Autenticação
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| POST | `/api/v1/app/login/sign-in` | Login com e-mail e senha |
-| POST | `/api/v1/app/login/google-login` | Login com conta do Google |
-| POST | `/api/v1/app/login/refresh-token` | Renovação de token (refresh token) |
-| POST | `/api/v1/app/login/register` | Registro de novo usuário |
+### 🔑 Authentication
+| Method | Route | Description |
+|--------|-------|-------------|
+| POST | `/api/v1/app/login/sign-in` | Login with email and password |
+| POST | `/api/v1/app/login/google-login` | Login with Google account |
+| POST | `/api/v1/app/login/refresh-token` | Token refresh (refresh token) |
+| POST | `/api/v1/app/login/register` | Register new user |
 
-### 🔁 Recuperação de Senha
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| POST | `/api/v1/app/login/lost-password/request-reset` | Enviar e-mail com link de redefinição |
-| POST | `/api/v1/app/login/lost-password/reset-password` | Redefinir senha com link enviado |
+### 🔁 Password Recovery
+| Method | Route | Description |
+|--------|-------|-------------|
+| POST | `/api/v1/app/login/lost-password/request-reset` | Send email with reset link |
+| POST | `/api/v1/app/login/lost-password/reset-password` | Reset password using link |
 
-### 📩 Verificação de E-mail
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| POST | `/api/v1/app/login/verify-email` | Verificação de e-mail (código/link) |
+### 📩 Email Verification
+| Method | Route | Description |
+|--------|-------|-------------|
+| POST | `/api/v1/app/login/verify-email` | Email verification (code/link) |
 
 ---
 
-## 🧱 Estrutura do Banco de Dados
+## 🧱 Database Structure
 
-### Tabela: `users`
-| Campo | Tipo |
+### Table: `users`
+| Field | Type |
 |-------|------|
-| id | chave primária |
+| id | primary key |
 | name | string |
 | email | string |
-| password | string (criptografada) |
+| password | string (encrypted) |
 | valid_user | boolean |
 | date_of_birth | string |
 | creation_date | string |
 | last_location | string |
 
-### Tabela: `email_validation`
-| Campo | Tipo |
+### Table: `email_validation`
+| Field | Type |
 |-------|------|
-| id | chave primária |
-| user_id | chave estrangeira |
+| id | primary key |
+| user_id | foreign key |
 | expire_datetime | datetime |
 | email_change_link | string |
 
-### Tabela: `password_reset`
-| Campo | Tipo |
+### Table: `password_reset`
+| Field | Type |
 |-------|------|
-| id | chave primária |
-| user_id | chave estrangeira |
+| id | primary key |
+| user_id | foreign key |
 | expire_datetime | datetime |
 | password_change_link | string |
 
 ---
 
-## 🚀 Como Executar
+## 🚀 How to Run
 
-1. Clone este repositório
-2. Configure os arquivos `.env` para o backend (incluindo as chaves JWT e Google OAuth)
-3. Rode o backend:
+1. Clone this repository
+2. Set up the `.env` files for the backend (including JWT and Google OAuth keys)
+3. Run the backend:
 ```bash
 cd backend
 npm install
 npm start
 ```
-4. Rode o frontend:
+4. Run the frontend:
 ```bash
 cd frontend
 npm install
 npm start
 ```
-5. Certifique-se de que MySQL e Redis estão ativos e configurados corretamente
+5. Make sure MySQL and Redis are running and properly configured
 
 ---
 
-## ✅ Funcionalidades Extras
+## ✅ Extra Features
 
-- Criptografia de senha com `bcrypt`
-- Armazenamento de refresh tokens no Redis
-- Validação de expiração de links de e-mail
-- Middleware de autenticação com JWT
-- Controle de sessões de múltiplos dispositivos
+- Password encryption with `bcrypt`
+- Refresh tokens stored in Redis
+- Expiration validation for email links
+- Authentication middleware using JWT
+- Multi-device session control
