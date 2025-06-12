@@ -1,3 +1,5 @@
+// src/routes/v1/middleware/auth.js
+
 const jwt = require("jsonwebtoken");
 
 function authenticateToken(req, res, next) {
@@ -7,7 +9,12 @@ function authenticateToken(req, res, next) {
   if (!token) return res.status(401).json({ message: "Token not provided" });
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ message: "Invalid token" });
+    if (err) {
+      if (err.name === "TokenExpiredError") {
+        return res.status(401).json({ message: "TokenExpiredError" }); // <- Agora detectável no front
+      }
+      return res.status(403).json({ message: "Invalid token" });
+    }
 
     req.user = user;
     next();

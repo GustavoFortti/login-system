@@ -1,3 +1,5 @@
+// /src/entities/PasswordReset.js
+
 const { EntitySchema } = require("typeorm");
 
 module.exports = new EntitySchema({

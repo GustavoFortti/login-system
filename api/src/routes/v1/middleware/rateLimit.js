@@ -1,3 +1,5 @@
+// src/routes/v1/middleware/rateLimit.js
+
 const rateLimit = require("express-rate-limit");
 
 const loginLimiter = rateLimit({

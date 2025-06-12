@@ -1,3 +1,5 @@
+// /src/entities/User.js
+
 const { EntitySchema } = require("typeorm");
 
 module.exports = new EntitySchema({
@@ -6,8 +8,8 @@ module.exports = new EntitySchema({
   columns: {
     id: { primary: true, type: "int", generated: true },
     name: { type: "varchar", length: 255 },
-    family_name: { type: "varchar", length: 255 },
-    picture: { type: "varchar", length: 255, nullable: true },
+    family_name: { type: "varchar", length: 255, nullable: true },
+    picture_url: { type: "varchar", length: 255, nullable: true },
     email: { type: "varchar", length: 255, unique: true },
     password: { type: "varchar", length: 255 },
     is_google_account: { type: "boolean", default: false },
